@@ -163,52 +163,42 @@ text-decoration:underline;
 </body>
 </html>
 <script>
-const priceMap = {
-  "Nón lá": 60000,
-  "Khoai deo": 150000,
-  "Gạo sạch Lệ Thủy": 25000,
-  "Ớt bột Hồng Thuỷ": 120000,
-  "Mực một nắng Ngư Thuỷ": 550000,
-  "Cá lóc khô tẩm gia vị": 320000
-};
+/* 🔹 BẢNG GIÁ */
+const prices = [60000,150000,25000,120000,550000,320000];
 
-const inputMap = {
-  "Nón lá": "sp0",
-  "Khoai deo": "sp1",
-  "Gạo sạch Lệ Thủy": "sp2",
-  "Ớt bột Hồng Thuỷ": "sp3",
-  "Mực một nắng Ngư Thuỷ": "sp4",
-  "Cá lóc khô tẩm gia vị": "sp5"
-};
-
+/* 🔹 LẤY GIỎ HÀNG */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 /* 🔹 ĐỔ GIỎ VÀO FORM */
 cart.forEach(item=>{
-  if(inputMap[item.name]){
-    document.getElementById(inputMap[item.name]).value = item.qty;
+  switch(item.name){
+    case "Nón lá": document.getElementById("sp0").value = item.qty; break;
+    case "Khoai deo": document.getElementById("sp1").value = item.qty; break;
+    case "Gạo sạch Lệ Thủy": document.getElementById("sp2").value = item.qty; break;
+    case "Ớt bột Hồng Thuỷ": document.getElementById("sp3").value = item.qty; break;
+    case "Mực một nắng Ngư Thuỷ": document.getElementById("sp4").value = item.qty; break;
+    case "Cá lóc khô tẩm gia vị": document.getElementById("sp5").value = item.qty; break;
   }
 });
 
+/* 🔹 TÍNH TỔNG TIỀN (THEO INPUT) */
 function tinhTien(){
   let total = 0;
-  cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  cart.forEach(item=>{
-    total += item.price * item.qty;
-  });
+  for(let i=0;i<6;i++){
+    let qty = Number(document.getElementById("sp"+i).value);
+    total += qty * prices[i];
+  }
 
   document.getElementById("tongtien").innerText =
-  "💰 Tổng tiền: " + total.toLocaleString("vi-VN") + " đ";
+    "💰 Tổng tiền: " + total.toLocaleString("vi-VN") + " đ";
 }
 
 /* 🔹 TÍNH TIỀN KHI LOAD */
 tinhTien();
 
-/* 🔹 CHỈ XÓA GIỎ SAU KHI GỬI ĐƠN */
+/* 🔹 XÓA GIỎ SAU KHI GỬI ĐƠN */
 document.querySelector("form").addEventListener("submit", function(){
   localStorage.removeItem("cart");
 });
 </script>
-
-
