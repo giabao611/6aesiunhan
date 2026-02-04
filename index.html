@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>OCOP Lệ Thủy</title>
+
+<style>
+.btn.add-cart{
+background:#FFA94D;
+color:#3A2A00;
+font-weight:bold;
+}
+.btn.add-cart:hover{
+background:#FF922B;
+}
+
+
+/* 🌸 CÀNH HOA ĐÀO MỜ 2 BÊN */
+.peach-left,
+.peach-right{
+position:fixed;
+top:0;
+width:220px;
+height:100%;
+background:url("images/peach-branch.png") no-repeat;
+background-size:cover;
+opacity:0.22;
+z-index:0;
+pointer-events:none;
+filter:blur(0.8px);
+}
+
+.peach-left{
+left:0;
+background-position:right center;
+}
+
+.peach-right{
+right:0;
+background-position:left center;
+transform:scaleX(-1);
+}
+
+/* ẨN TRÊN MOBILE */
+@media(max-width:1200px){
+.peach-left,
+.peach-right{
+display:none;
+}
+}
+
+body{
+margin:0;
+font-family:Arial;
+background:#FFF4EC;          /* 🌾 nền ngà sáng */
+overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+background:#E34A4A;          /* 🔴 đỏ cam OCOP */
+color:white;
+text-align:center;
+padding:15px;
+position:relative;
+z-index:2;
+}
+
+header h1{margin:0}
+
+/* MENU FIXED */
+nav{
+background:#D94141;          /* đỏ đậm hơn header */
+position:fixed;
+top:20px;
+right:20px;
+border-radius:10px;
+z-index:999;
+box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+nav a{
+color:white;
+padding:10px 15px;
+display:block;
+text-decoration:none;
+border-bottom:1px solid rgba(255,255,255,0.35);
+}
+
+nav a:last-child{
+border-bottom:none;
+}
+
+nav a:hover{
+background:#E85C5C;
+}
+
+/* BANNER */
+.banner img{
+width:100%;
+height:700px;
+object-fit:cover;
+}
+
+/* CONTENT */
+.container{
+padding:30px;
+max-width:1100px;
+margin:auto;
+position:relative;
+z-index:2;
+}
+
+h2{
+color:#2F3E5C;              /* xanh đậm – dễ đọc */
+}
+
+/* SEARCH */
+.search-box{
+margin:20px 0;
+text-align:center;
+}
+
+.search-box input{
+width:60%;
+padding:12px;
+border-radius:10px;
+border:2px solid #FFA94D;    /* cam nhạt */
+font-size:16px;
+background:#FFFDF9;
+}
+
+/* PRODUCTS */
+.products{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+align-items:stretch;
+}
+
+/* PRODUCT */
+.product{
+background:#FFFDF6;          /* nền thẻ dịu */
+border-radius:14px;
+width:300px;
+padding:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.12);
+transition:0.3s ease;
+display:flex;
+flex-direction:column;
+border:2px solid #FFD166;    /* viền vàng nhạt */
+}
+
+.product p{
+flex-grow:1;
+color:#5A5A5A;
+}
+
+/* HOVER */
+.product:hover{
+transform:translateY(-6px) scale(1.05);
+box-shadow:0 8px 18px rgba(0,0,0,0.18);
+z-index:10;
+}
+
+.product img{
+width:100%;
+border-radius:10px;
+}
+
+/* GIÁ */
+.price{
+color:#C26B1D;              /* nâu cam */
+font-weight:bold;
+}
+
+/* BUTTON */
+.btn-group{
+margin-top:10px;
+display:flex;
+gap:10px;
+}
+
+.btn{
+flex:1;
+background:#E34A4A;          /* nút chính */
+color:white;
+padding:8px;
+border-radius:8px;
+text-decoration:none;
+text-align:center;
+font-size:14px;
+transition:0.25s;
+}
+
+.btn:hover{
+background:#D94141;
+}
+
+.btn.detail{
+background:#6EC6C1;          /* xanh ngọc – nút phụ */
+color:#123;
+}
+
+.btn.detail:hover{
+background:#5BB3AE;
+}
+
+/* FOOTER */
+footer{
+background:#E34A4A;
+color:white;
+text-align:center;
+padding:15px;
+margin-top:40px;
+position:relative;
+z-index:2;
+}
+
+/* 🌸 HOA SEN RƠI */
+.lotus{
+position:fixed;
+top:-50px;
+width:50px;
+height:50px;
+background:url("images/lotus.png") no-repeat center/contain;
+pointer-events:none;
+animation:fall linear forwards;
+z-index:1;
+opacity:0.75;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>GIAN HÀNG OCOP QUẢNG BÌNH</h1>
+<p>🌿 Đặc sản OCOP – Tinh hoa quê hương 🌿</p>
+</header>
+
+<nav>
+<a href="cart.html">🛒 Giỏ hàng (<span id="cartCount">0</span>)</a>
+<a href="index.html">Trang chủ</a>
+<a href="product.html">Chi tiết</a>
+<a href="order.html">Đặt hàng</a>
+</nav>
+
+
+<div class="banner">
+<img src="images/trangchu1.jpg">
+</div>
+
+<div class="container">
+
+<h2>Sản phẩm nổi bật</h2>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Tìm sản phẩm (ví dụ: nón, khoai, gạo, ớt, mực...)">
+</div>
+
+<div class="products">
+
+<div class="product" data-name="nón lá">
+<img src="images/nonla1.jpg">
+<h3>Nón lá</h3>
+<p class="price">Giá: 60.000đ</p>
+<p>Nón lá thủ công truyền thống.</p>
+<div class="btn-group">
+  <a href="product.html#nonla" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Nón lá"
+     data-price="60000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+</div>
+
+<div class="product" data-name="khoai deo">
+<img src="images/khoaideo1.jpg">
+<h3>Khoai deo</h3>
+<p class="price">Giá: 150.000đ/kg</p>
+<p>Khoai deo Quảng Bình dẻo ngọt.</p>
+<div class="btn-group">
+  <a href="product.html#khoaideo" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Khoai deo"
+     data-price="150000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+
+</div>
+
+<div class="product" data-name="gạo sạch lệ thủy">
+<img src="https://cdn.nhandan.vn/images/a48e0596059359812a5b08ccf3f1da0ef55f542c151adfc47b7f43aa6088bd0a65791ef971be4cd6324c1045fd01bfdbcb410867b920a8a1b20349ea296f3975c2381094306107c33e4c998a37d06158/1655970706-4765-3565.jpg">
+<h3>Gạo sạch Lệ Thủy</h3>
+<p class="price">Giá: 25.000đ/kg</p>
+<p>Gạo thơm dẻo, an toàn.</p>
+<div class="btn-group">
+  <a href="product.html#gao" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Gạo sạch Lệ Thủy"
+     data-price="25000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+</div>
+
+<div class="product" data-name="ớt bột hồng thủy">
+<img src="images/otbot3.jpg">
+<h3>Ớt bột Hồng Thủy</h3>
+<p class="price">Giá: 120.000đ/kg</p>
+<p>Ớt bột cay thơm, xay mịn.</p>
+<div class="btn-group">
+  <a href="product.html#otbot" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Ớt bột Hồng Thủy"
+     data-price="120000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+</div>
+
+<div class="product" data-name="mực một nắng ngư thủy">
+<img src="images/muc1nang3.jpg">
+<h3>Mực một nắng Ngư Thủy</h3>
+<p class="price">Giá: 550.000đ/kg</p>
+<p>Mực tươi phơi một nắng, thịt dày.</p>
+<div class="btn-group">
+  <a href="product.html#muc" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Mực một nắng Ngư Thủy"
+     data-price="550000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+</div>
+
+<div class="product" data-name="cá lóc khô tẩm gia vị">
+<img src="images/calockho1.jpg">
+<h3>Cá lóc khô tẩm gia vị</h3>
+<p class="price">Giá: 320.000đ/kg</p>
+<p>Cá lóc khô tẩm gia vị đậm đà, phơi nắng tự nhiên.</p>
+<div class="btn-group">
+  <a href="product.html#calockho" class="btn detail">Chi tiết</a>
+
+  <a href="#" class="btn add-cart"
+     data-name="Cá lóc khô tẩm gia vị"
+     data-price="320000">
+     🛒 Thêm vào giỏ
+  </a>
+
+  <a href="order.html" class="btn">
+     Đặt hàng
+  </a>
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+<footer>
+📞 036 3636 1818 | ocopquangbinh@gmail.com
+</footer>
+
+<script>
+/* SEARCH */
+const searchInput = document.getElementById("searchInput");
+const products = document.querySelectorAll(".product");
+
+searchInput.addEventListener("keyup", function(){
+let value = searchInput.value.toLowerCase();
+products.forEach(product => {
+let name = product.getAttribute("data-name");
+product.style.display = name.includes(value) ? "flex" : "none";
+});
+});
+
+/* 🌸 TẠO HOA SEN RƠI */
+function createLotus(){
+const lotus=document.createElement("div");
+lotus.classList.add("lotus");
+lotus.style.left=Math.random()*window.innerWidth+"px";
+lotus.style.animationDuration=5+Math.random()*5+"s";
+lotus.style.transform=`scale(${0.5+Math.random()})`;
+document.body.appendChild(lotus);
+
+setTimeout(()=>{ lotus.remove(); },10000);
+}
+
+setInterval(createLotus,1200);
+</script>
+
+</body>
+</html>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartCount = document.getElementById("cartCount");
+
+function updateCart(){
+cartCount.innerText = cart.reduce((s,i)=>s+i.qty,0);
+localStorage.setItem("cart",JSON.stringify(cart));
+}
+updateCart();
+
+document.querySelectorAll(".add-cart").forEach(btn=>{
+btn.onclick = e=>{
+e.preventDefault();
+let name = btn.dataset.name;
+let price = +btn.dataset.price;
+let item = cart.find(i=>i.name===name);
+item ? item.qty++ : cart.push({name,price,qty:1});
+updateCart();
+alert("✅ Đã thêm vào giỏ!");
+};
+});
+
+cartBtn.onclick = ()=>{
+let t="🧺 GIỎ HÀNG\n\n", sum=0;
+cart.forEach(i=>{
+t+=`${i.name} x ${i.qty} = ${(i.price*i.qty).toLocaleString()}đ\n`;
+sum+=i.price*i.qty;
+});
+alert(t+"\nTổng: "+sum.toLocaleString()+"đ");
+};
+</script>
+

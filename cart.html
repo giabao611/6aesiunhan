@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Giỏ hàng</title>
+<style>
+body{font-family:Arial;background:#FFF4EC;margin:0}
+h1{text-align:center;color:#E34A4A}
+.cart{max-width:900px;margin:30px auto;background:#fff;padding:20px;border-radius:12px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;border-bottom:1px solid #ddd;text-align:center}
+button{padding:6px 10px;border:none;border-radius:6px;cursor:pointer}
+.btn-add{background:#6EC6C1}
+.btn-sub{background:#FFD166}
+.btn-del{background:#E34A4A;color:white}
+.total{text-align:right;font-size:18px;font-weight:bold;margin-top:15px}
+.back{display:block;margin-top:20px;text-align:center}
+</style>
+</head>
+
+<body>
+
+<h1>🧺 Giỏ hàng của bạn</h1>
+
+<div class="cart">
+<table id="cartTable">
+<tr>
+<th>Sản phẩm</th>
+<th>Giá</th>
+<th>Số lượng</th>
+<th>Tạm tính</th>
+<th>Xóa</th>
+</tr>
+</table>
+
+<div class="total" id="total"></div>
+
+<!-- 🔧 SỬA Ở ĐÂY: đổi a thành button -->
+<button class="back" onclick="goOrder()">➡️ Tiến hành đặt hàng</button>
+<a href="index.html" class="back">⬅️ Quay lại mua tiếp</a>
+</div>
+
+<script>
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+const table=document.getElementById("cartTable");
+const totalEl=document.getElementById("total");
+
+function render(){
+let sum=0;
+table.innerHTML=`
+<tr>
+<th>Sản phẩm</th>
+<th>Giá</th>
+<th>Số lượng</th>
+<th>Tạm tính</th>
+<th>Xóa</th>
+</tr>`;
+cart.forEach((i,index)=>{
+let row=table.insertRow();
+row.innerHTML=`
+<td>${i.name}</td>
+<td>${i.price.toLocaleString()}đ</td>
+<td>
+<button class="btn-sub">-</button>
+${i.qty}
+<button class="btn-add">+</button>
+</td>
+<td>${(i.price*i.qty).toLocaleString()}đ</td>
+<td><button class="btn-del">✖</button></td>
+`;
+
+row.querySelector(".btn-add").onclick=()=>{i.qty++;save();}
+row.querySelector(".btn-sub").onclick=()=>{if(i.qty>1)i.qty--;save();}
+row.querySelector(".btn-del").onclick=()=>{cart.splice(index,1);save();}
+sum+=i.price*i.qty;
+});
+totalEl.innerText="Tổng cộng: "+sum.toLocaleString()+"đ";
+}
+
+function save(){
+localStorage.setItem("cart",JSON.stringify(cart));
+render();
+}
+
+/* 🔧 THÊM DUY NHẤT HÀM NÀY */
+function goOrder(){
+  // CHỈ chuyển trang, KHÔNG reset giỏ
+  window.location.href = "order.html";
+}
+
+render();
+</script>
+
+</body>
+</html>
